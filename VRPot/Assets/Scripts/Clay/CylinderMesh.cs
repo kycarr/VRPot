@@ -37,7 +37,6 @@ public class CylinderMesh : MonoBehaviour {
         GenerateVertices();
         GenerateTriangles();
         GenerateUVs();
-        GenerateColliders();
 
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
@@ -115,14 +114,6 @@ public class CylinderMesh : MonoBehaviour {
             }
         }
         mesh.uv = uvs;
-    }
-
-    // Generate a collision box
-    private void GenerateColliders()
-    {
-        MeshCollider collider = gameObject.AddComponent<MeshCollider>();
-        collider.convex = true;
-        collider.sharedMesh = mesh;
     }
 
     private void calculateMeshTangents(Mesh mesh)

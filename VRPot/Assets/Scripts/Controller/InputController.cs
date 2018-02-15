@@ -8,17 +8,17 @@ public abstract class InputController : MonoBehaviour {
     abstract protected Vector3 Velocity();          // velocity of controller
     abstract protected Vector3 AngularVelocity();   // angular velocity of controller
 
-    public void OnTriggerEnter(Collider other)
+    protected void OnCollisionEnter(Collision other)
     {
         SetCollidingObject(other.gameObject);
     }
 
-    public void OnTriggerStay(Collider other)
+    protected void OnCollisionStay(Collision other)
     {
         SetCollidingObject(other.gameObject);
     }
 
-    public void OnTriggerExit(Collider other)
+    protected void OnCollisionExit(Collision other)
     {
         RemoveCollidingObject();
     }

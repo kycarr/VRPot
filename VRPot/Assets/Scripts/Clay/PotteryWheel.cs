@@ -4,13 +4,11 @@ using UnityEngine;
 public class PotteryWheel : MonoBehaviour {
 
     [SerializeField] Material defaultMaterial;
-
-    public float speed;                         // speed the wheel is spinning at
+    public float speed = 1f;                    // speed the wheel is spinning at
     private List<GameObject> objectsOnWheel;    // objects that are on the wheel
 
     void Start()
     {
-        speed = 1f;
         objectsOnWheel = new List<GameObject>();
     }
 
@@ -28,42 +26,35 @@ public class PotteryWheel : MonoBehaviour {
     public void AdjustSpeed()
     {
         if (speed == 1f)
-        {
             speed = 2f;
-        }
         else if (speed == 2f)
-        {
             speed = 0f;
-        }
         else if (speed == 0f)
-        {
             speed = 1f;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<ViveInputController>())
+        {
+            ShowInteraction(true);
+        }
+        else
+        {
+            AddSpinningObject(collision.gameObject);
         }
     }
 
-    // Collision detection
-    public void OnCollisionEnter(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
-        AddSpinningObject(collision.gameObject);
-    }
-
-    public void OnCollisionExit(Collision collision)
-    {
-        RemoveSpinningObject(collision.gameObject);
-    }
-
-    // Controller detection
-    public void OnTriggerEnter(Collider other)
-    {
-        // Highlight the pottery wheel to show the user can interact with it
-        // TODO: draw menu displaying current speed of wheel and telling user to squeeze trigger to change speed
-        // TODO: make highlighted material look nicer and maybe add particle effects?
-        GetComponent<MeshRenderer>().material = null;
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        GetComponent<MeshRenderer>().material = defaultMaterial;
+        if (collision.gameObject.GetComponent<ViveInputController>())
+        {
+            ShowInteraction(false);
+        }
+        else
+        {
+            RemoveSpinningObject(collision.gameObject);
+        }
     }
 
     // When an object is placed on the pottery wheel, add it to the list of objects to spin
@@ -82,5 +73,16 @@ public class PotteryWheel : MonoBehaviour {
         {
             objectsOnWheel.Remove(obj);
         }
+    }
+
+    // Show interaction menu when controller touches pottery wheel
+    private void ShowInteraction(bool show)
+    {
+        // Highlight the pottery wheel when the user can interact with it
+        GetComponent<MeshRenderer>().material = show ? null : defaultMaterial;
+
+        // TODO: show menu displaying current speed of wheel and telling user to squeeze trigger to change speed
+
+        // TODO: make highlighted material look nicer and add particle effects
     }
 }

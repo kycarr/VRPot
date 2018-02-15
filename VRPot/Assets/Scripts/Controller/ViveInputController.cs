@@ -17,6 +17,7 @@ public class ViveInputController : InputController
 
     void Update()
     {
+        // Grab and interact things by squeezing trigger
         if (Controller.GetHairTriggerDown())
         {
             if (collidingObject)
@@ -24,6 +25,7 @@ public class ViveInputController : InputController
                 InteractWithObject();
             }
         }
+        // Release things by letting go of trigger
         if (Controller.GetHairTriggerUp())
         {
             if (objectInHand)

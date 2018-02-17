@@ -5,7 +5,6 @@ public class DeformableMesh : MonoBehaviour {
 
     Mesh deformingMesh;
     MeshCollider deformingCollider;
-
     Vector3[] originalVertices;     // original, undeformed mesh
     Vector3[] displacedVertices;    // mesh after deformations
     float uniformScale = 1f;
@@ -45,7 +44,7 @@ public class DeformableMesh : MonoBehaviour {
         pointToVertex *= uniformScale;
         float attenuatedForce = force / (1f + pointToVertex.sqrMagnitude);
         float velocity = attenuatedForce * Time.deltaTime;
-        Vector3 vertexVelocity = direction * velocity;
+        Vector3 vertexVelocity = pointToVertex.normalized * velocity;
         displacedVertices[i] += vertexVelocity * Time.deltaTime;
     }
 

@@ -20,7 +20,7 @@ public class MeshDeformerInput : MonoBehaviour {
 			if (deformer) {
 				Vector3 point = hit.point;
 				point += hit.normal * forceOffset;
-				//deformer.AddDeformingForce(point, force);
+				deformer.AddDeformingForce(point, hit.normal, force);
 			}
 		}
 	}

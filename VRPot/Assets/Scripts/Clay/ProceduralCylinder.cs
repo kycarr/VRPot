@@ -4,7 +4,7 @@
  * Procedurally generates a simple cylinder
  **/
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class CylinderMesh : MonoBehaviour {
+public class ProceduralCylinder : MonoBehaviour {
 
     [SerializeField] float radius = 1f;         // radius of cylinder
     [SerializeField] float height = 1f;         // height of cylinder

@@ -36,8 +36,6 @@ public class ProceduralPot : MonoBehaviour {
 
 		GenerateVertices();
 		GenerateTriangles();
-		GenerateUVs();
-		GenerateColliders();
 
 		mesh.RecalculateNormals();
 		mesh.RecalculateBounds();
@@ -165,51 +163,6 @@ public class ProceduralPot : MonoBehaviour {
 
 
 		mesh.triangles = triangles;
-	}
-
-	private void GenerateUVs()
-	{
-		int numRingVerts = numRingPoints + 1;
-		int numUVs = numRingVerts * numRings;
-		float uvStepH = 1.0f / numRingPoints;
-		float uvStepV = 1.0f / (numRings + 1);
-		Vector2[] uvs = new Vector2[numUVs];
-
-
-		// Outer side
-		for (int r = 0; r < numRings; r++)
-		{
-			for (int v = 0; v < numRingVerts; v++)
-			{
-				uvs[r * numRings + v] = new Vector2(v * uvStepH, r * uvStepV);
-			}
-		}
-
-		//Inner side
-		int offset = numUVs;
-		for (int r = 0; r < numRings; r++)
-		{
-			for (int v = 0; v < numRingVerts; v++)
-			{
-				uvs[r * numRings + v + offset] = new Vector2(v * uvStepH, r * uvStepV);
-			}
-		}
-
-
-		// Centers
-
-		// ???  what uvs should the centers be?
-		offset *= 2;
-		uvs [offset] = new Vector2 (0, 0.5f);
-		uvs [offset + 1] = new Vector2 (uvStepH, 0.5f);
-
-
-		mesh.uv = uvs;
-	}
-
-	private void GenerateColliders()
-	{
-		gameObject.AddComponent<CapsuleCollider>();
 	}
 
 	private void calculateMeshTangents(Mesh mesh)

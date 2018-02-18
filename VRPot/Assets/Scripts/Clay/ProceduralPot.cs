@@ -39,7 +39,7 @@ public class ProceduralPot : MonoBehaviour {
 
 		mesh.RecalculateNormals();
 		mesh.RecalculateBounds();
-		calculateMeshTangents(mesh);
+		//calculateMeshTangents(mesh);
 	}
 
 	private void Awake()

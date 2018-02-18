@@ -3,7 +3,7 @@
 [RequireComponent(typeof(MeshFilter))]
 public class DeformableMesh : MonoBehaviour {
 
-    Mesh deformingMesh;
+	Mesh deformingMesh;
     MeshCollider deformingCollider;
     Vector3[] originalVertices;     // original, undeformed mesh
     Vector3[] displacedVertices;    // mesh after deformations
@@ -24,28 +24,31 @@ public class DeformableMesh : MonoBehaviour {
         deformingCollider.sharedMesh = deformingMesh;
     }
 
-    public void AddDeformingForce(Vector3 contactPoint, Vector3 contactNormal, float force)
+	public void AddDeformingForce(Vector3 contactPoint, Vector3 contactNormal, float force, float radius)
     {
         contactPoint = transform.InverseTransformPoint(contactPoint);
         contactNormal = transform.InverseTransformDirection(-contactNormal);
 
         for (int i = 0; i < displacedVertices.Length; i++)
         {
-            AddForceToVertex(i, contactPoint, contactNormal, force);
+            AddForceToVertex(i, contactPoint, contactNormal, force, radius);
         }
         deformingMesh.vertices = displacedVertices;
         deformingMesh.RecalculateBounds();
         UpdateCollider();
     }
 
-    void AddForceToVertex(int i, Vector3 point, Vector3 direction, float force)
+	void AddForceToVertex(int i, Vector3 point, Vector3 normal, float force, float radius)
     {
-        Vector3 pointToVertex = displacedVertices[i] - point;
+		Vector3 pointToVertex = point - displacedVertices[i];
         pointToVertex *= uniformScale;
-        float attenuatedForce = force / (1f + pointToVertex.sqrMagnitude);
-        float velocity = attenuatedForce * Time.deltaTime;
-        Vector3 vertexVelocity = pointToVertex.normalized * velocity;
-        displacedVertices[i] += vertexVelocity * Time.deltaTime;
+		normal.y = 0.0f;
+		if (pointToVertex.magnitude <= radius) {
+			float attenuatedForce = force * (1 - Mathf.Pow(pointToVertex.magnitude / radius, 2));
+			float velocity = attenuatedForce * Time.deltaTime;
+			Vector3 vertexVelocity = normal.normalized * velocity;
+			displacedVertices[i] += vertexVelocity * Time.deltaTime;
+		}
     }
 
     void UpdateCollider()

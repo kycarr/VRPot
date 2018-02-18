@@ -2,9 +2,9 @@
 
 public class Clay : MonoBehaviour {
 
-    [SerializeField] float forceSensitivity = 0.1f;  // sensitivity to touch
-    [SerializeField] float heatSensitivity;          // sensitivity to heat
-
+	[SerializeField] float minDistance = 0.1f;
+	[SerializeField] float force = 10f;
+    [SerializeField] float pointSensitivity = 0.2f;  // distance at which points are affected by contact
     private DeformableMesh deformableMesh;
     private Rigidbody rigidBody;
 
@@ -23,10 +23,10 @@ public class Clay : MonoBehaviour {
         }
         else if (collision.gameObject.GetComponent<Rigidbody>())
         {
-            foreach (ContactPoint contact in collision.contacts)
-            {
-                deformableMesh.AddDeformingForce(contact.point, contact.normal, 10f);
-            }
+			if (collision.contacts [0].separation < minDistance)
+			{
+				deformableMesh.AddDeformingForce(collision.contacts[0].point, -collision.contacts[0].normal, force, pointSensitivity);
+			}
         }
     }
 

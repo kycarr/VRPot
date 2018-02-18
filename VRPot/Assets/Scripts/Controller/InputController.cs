@@ -10,17 +10,17 @@ public abstract class InputController : MonoBehaviour {
 
     protected void OnCollisionEnter(Collision other)
     {
-        SetCollidingObject(other.gameObject);
+		SetCollidingObject(other.gameObject);
     }
 
     protected void OnCollisionStay(Collision other)
     {
-        SetCollidingObject(other.gameObject);
+		SetCollidingObject(other.gameObject);
     }
 
     protected void OnCollisionExit(Collision other)
     {
-        RemoveCollidingObject();
+		RemoveCollidingObject();
     }
 
     // When the controller touches an object, set it up as an interaction target.

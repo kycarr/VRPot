@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4668807909503240}
   - component: {fileID: 33704060942694264}
   - component: {fileID: 23246601881303678}
-  - component: {fileID: 114643811649310902}
+  - component: {fileID: 54887283023641762}
+  - component: {fileID: 114741722044380066}
   - component: {fileID: 114045515673267816}
   - component: {fileID: 114987499097269120}
-  - component: {fileID: 54887283023641762}
   m_Layer: 0
   m_Name: Clay
   m_TagString: Untagged
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6c3fcb8cc64b943b2f5e041b5ee597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114643811649310902
+--- !u!114 &114741722044380066
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -120,13 +120,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1459334655509572}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa25724efd39beb42a36026f879db594, type: 3}
+  m_Script: {fileID: 11500000, guid: cd2905b9722704e9caef3b5a389e2d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.25
-  height: 0.25
+  radius: 0.5
+  height: 0.5
+  thickness: 0.05
   numRings: 10
   numRingPoints: 20
+  baseCenter: {x: 0, y: 0, z: 0}
 --- !u!114 &114987499097269120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,5 +140,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5b41af26c7ad94f9ed5a1df0d27c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceSensitivity: 0
-  heatSensitivity: 0
+  force: 30
+  pointSensitivity: 0.2

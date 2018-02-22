@@ -44,6 +44,17 @@ public class DeformableMesh : MonoBehaviour {
 	public void AddDeformingForceToCenter(Vector3 contactPoint, Vector3 contactNormal, float force, float radius)
 	{
 		contactPoint = transform.InverseTransformPoint(contactPoint);
+
+		float min_dis = float.MaxValue;
+		int min_idx = 0;
+		for (int i = 0; i < displacedVertices.Length; i++)
+		{
+			if ((contactPoint - displacedVertices [i]).magnitude < min_dis) {
+				min_dis = (contactPoint - displacedVertices [i]).magnitude;
+				min_idx = i;
+			}
+		}
+		contactPoint = displacedVertices [min_idx];
 		contactNormal = transform.InverseTransformDirection(center-contactPoint);
 
 		for (int i = 0; i < displacedVertices.Length; i++)

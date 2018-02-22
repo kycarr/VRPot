@@ -8,6 +8,7 @@ public class DeformableMesh : MonoBehaviour {
     Vector3[] originalVertices;     // original, undeformed mesh
     Vector3[] displacedVertices;    // mesh after deformations
     float uniformScale = 1f;
+	Vector3 center = new Vector3(0,0,0);
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class DeformableMesh : MonoBehaviour {
         {
             displacedVertices[i] = originalVertices[i];
         }
+
 
         deformingCollider = gameObject.AddComponent<MeshCollider>();
         deformingCollider.convex = true;
@@ -37,6 +39,21 @@ public class DeformableMesh : MonoBehaviour {
         deformingMesh.RecalculateBounds();
         UpdateCollider();
     }
+
+	// deform force point to center of cylinder
+	public void AddDeformingForceToCenter(Vector3 contactPoint, Vector3 contactNormal, float force, float radius)
+	{
+		contactPoint = transform.InverseTransformPoint(contactPoint);
+		contactNormal = transform.InverseTransformDirection(center-contactPoint);
+
+		for (int i = 0; i < displacedVertices.Length; i++)
+		{
+			AddForceToVertex(i, contactPoint, contactNormal, force, radius);
+		}
+		deformingMesh.vertices = displacedVertices;
+		deformingMesh.RecalculateBounds();
+		UpdateCollider();
+	}
 
 	void AddForceToVertex(int i, Vector3 point, Vector3 normal, float force, float radius)
     {

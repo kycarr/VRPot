@@ -27,6 +27,8 @@ public class Clay : MonoBehaviour {
 			{
 				deformableMesh.AddDeformingForce(collision.contacts[0].point, -collision.contacts[0].normal, force, pointSensitivity);
 			}
+			// to be test on Vive
+//			deformableMesh.AddDeformingForceToCenter(collision.contacts[0].point, -collision.contacts[0].normal, force, pointSensitivity);
         }
     }
 

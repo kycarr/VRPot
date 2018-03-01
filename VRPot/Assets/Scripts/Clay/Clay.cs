@@ -5,6 +5,7 @@ public class Clay : MonoBehaviour {
 	[SerializeField] float minDistance = 0.1f;
 	[SerializeField] float force = 10f;
     [SerializeField] float pointSensitivity = 0.2f;  // distance at which points are affected by contact
+
     private DeformableMesh deformableMesh;
     private Rigidbody rigidBody;
 
@@ -16,34 +17,20 @@ public class Clay : MonoBehaviour {
 
     void OnCollisionStay(Collision collision)
     {
-        // Clay was put on pottery wheel
-        if (collision.gameObject.GetComponent<PotteryWheel>())
-        {
-            SetKinematic(true);
-        }
-        else if (collision.gameObject.GetComponent<Rigidbody>())
+        if (collision.gameObject.GetComponent<Rigidbody>())
         {
 			if (collision.contacts [0].separation < minDistance)
 			{
 				deformableMesh.AddDeformingForce(collision.contacts[0].point, -collision.contacts[0].normal, force, pointSensitivity);
 			}
-			// to be test on Vive
-//			deformableMesh.AddDeformingForceToCenter(collision.contacts[0].point, -collision.contacts[0].normal, force, pointSensitivity);
         }
     }
 
-    void OnCollisionExit(Collision collision)
+    public void SetDeformable(bool isDeformable)
     {
-        if (collision.gameObject.GetComponent<PotteryWheel>())
-        {
-            SetKinematic(false);
-        }
-    }
-
-    private void SetKinematic(bool isKinematic)
-    {
-        rigidBody.isKinematic = isKinematic;
-        rigidBody.useGravity = !isKinematic;
+        GetComponent<MeshCollider>().convex = !isDeformable;
+        rigidBody.isKinematic = isDeformable;
+        rigidBody.useGravity = !isDeformable;
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = Vector3.zero;
     }

@@ -63,6 +63,10 @@ public class PotteryWheel : MonoBehaviour {
         if (!objectsOnWheel.Contains(obj) && obj.GetComponent<Rigidbody>())
         {
             objectsOnWheel.Add(obj);
+            if (obj.GetComponent<Clay>())
+            {
+                obj.GetComponent<Clay>().SetDeformable(true);
+            }
         }
     }
 
@@ -72,6 +76,10 @@ public class PotteryWheel : MonoBehaviour {
         if (objectsOnWheel.Contains(obj))
         {
             objectsOnWheel.Remove(obj);
+            if (obj.GetComponent<Clay>())
+            {
+                obj.GetComponent<Clay>().SetDeformable(false);
+            }
         }
     }
 

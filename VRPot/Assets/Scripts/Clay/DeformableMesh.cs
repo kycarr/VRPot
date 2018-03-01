@@ -20,7 +20,6 @@ public class DeformableMesh : MonoBehaviour {
             displacedVertices[i] = originalVertices[i];
         }
 
-
         deformingCollider = gameObject.AddComponent<MeshCollider>();
         deformingCollider.convex = true;
         deformingCollider.sharedMesh = deformingMesh;
